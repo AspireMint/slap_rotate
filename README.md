@@ -12,6 +12,10 @@ Usage:
 - left-click (dig) rotates node horizontally  
 - right-click (place) rotates node vertically  
   
+Depends:  
+- default  
+- wool  
+  
 License:  
 code - GNU General Public License v3.0  
 media - CC by SA 3.0, for more details: http://creativecommons.org/licenses/by-sa/3.0/  
