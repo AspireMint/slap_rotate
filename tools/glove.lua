@@ -26,13 +26,13 @@ local handler = function(itemstack, user, pointed_thing, look_dir)
 	local pos = pointed_thing.under
 	
 	if not node_util.can_interact(user, pos) then
-		return
+		return itemstack
 	end
 	
 	local node = minetest.get_node(pos)
 	
 	if not rotate_util.can_rotate(node) then
-		return
+		return itemstack
 	end
 
 	local ndef = minetest.registered_nodes[node.name]
@@ -66,8 +66,7 @@ minetest.register_craft({
 	output = current_modname..":"..TOOL_NAME,
 	recipe = {
 		{"group:wool"},
-		{"group:stick"},
-		
+		{"group:stick"}
 	}
 })
 
