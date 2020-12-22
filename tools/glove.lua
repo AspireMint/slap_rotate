@@ -26,13 +26,13 @@ local handler = function(itemstack, user, pointed_thing, look_dir)
 	local pos = pointed_thing.under
 	
 	if not node_util.can_interact(user, pos) then
-		return itemstack
+		return
 	end
 	
 	local node = minetest.get_node(pos)
 	
 	if not rotate_util.can_rotate(node) then
-		return itemstack
+		return
 	end
 
 	local ndef = minetest.registered_nodes[node.name]
@@ -47,7 +47,7 @@ local handler = function(itemstack, user, pointed_thing, look_dir)
 end
 
 minetest.register_tool(current_modname..":"..TOOL_NAME, {
-	description = "Leather glove\n"
+	description = "Glove\n"
 		.."left-click rotates node horizontally\n"
 		.."right-click rotates node vertically",
 	inventory_image = "leather_glove.png^[transformFXR90",
