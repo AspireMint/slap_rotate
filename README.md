@@ -13,5 +13,5 @@ Usage:
 - right-click (place) rotates node vertically  
   
 License:  
-code - GNU General Public License v3.0
+code - GNU General Public License v3.0  
 media - CC by SA 3.0, for more details: http://creativecommons.org/licenses/by-sa/3.0/  
