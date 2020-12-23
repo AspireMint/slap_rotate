@@ -8,13 +8,17 @@ Glove recipe (like screwdriver, but uses wool instead of steel ingot):
 { group:wool }  
 { group:stick }  
   
-Usage:  
+Usage - depends on config.lua:  
+version 1:  
 - left-click (dig) rotates node horizontally  
-- right-click (place) rotates node vertically  
+- right-click (place) rotates node vertically, based on players yaw  
+version 2 (default):  
+- left-click (dig)  rotates node horizontally  
+- right-click (place) rotates node vertically, based on nodes face you are pointing  
   
-Depends:  
-- default  
-- wool  
+Dependencies:  
+default  
+wool  
   
 License:  
 code - GNU General Public License v3.0  

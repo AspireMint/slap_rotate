@@ -16,9 +16,24 @@ util.get_axis_index = function(axis)
 	return AXIS[axis]
 end
 
-util.get_look_dir = function(user)
-	local facedir = minetest.dir_to_facedir(user:get_look_dir(), false)
-	return LOOK_DIR[facedir]
+util.get_look_dir = function(index)
+	return LOOK_DIR[index]
+end
+
+util.get_look_dir_by_user = function(user)
+	local index = minetest.dir_to_facedir(user:get_look_dir(), false)
+	return util.get_look_dir(index)
+end
+
+util.get_look_dir_by_sidedir = function(dir)
+	if dir.x ~= 0 then
+		return LOOK_DIR[(dir.x*-1)+2]
+	end
+
+	if dir.z ~= 0 then
+		return LOOK_DIR[(dir.z*-1)+1]
+	end
+	error('Unsupported sidedir: '..minetest.pos_to_string(dir))
 end
 
 return util
