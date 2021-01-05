@@ -74,6 +74,10 @@ controller.on_place = function(itemstack, user, pointed_thing)
 		local p2 = pointed_thing.above
 		local dir = vector.direction(p2, p1)
 		
+		if vector.length(dir) == 0 then
+			return
+		end
+		
 		local look_dir = nil
 		
 		local wallmounted = minetest.dir_to_wallmounted(dir)
