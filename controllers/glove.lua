@@ -21,6 +21,18 @@ local get_new_rotation = function(paramtype, axis, origin, angle)
     return rotation
 end
 
+function sound_play(pos, ndef)
+	if config.sound and ndef.sounds and ndef.sounds.place then
+		local sound_name = ndef.sounds.place.name
+		local sound_gain = ndef.sounds.place.gain
+		minetest.sound_play(ndef.sounds.place.name, {
+			pos = pos,
+			gain = ndef.sounds.place.gain,
+			max_hear_distance = 10
+		}, true)
+	end
+end
+
 local handler = function(itemstack, user, pointed_thing, look_dir)
 	if pointed_thing.type ~= "node" then
 		return
@@ -44,18 +56,19 @@ local handler = function(itemstack, user, pointed_thing, look_dir)
 	local axis_index = look_dir.perpendicular_axis_index
 	local new_rotation = get_new_rotation(ndef.paramtype2, axis_index, rotation, angle)
 	local param2_supplement = node.param2 - rotation
-	node.param2 = new_rotation + param2_supplement
-	minetest.swap_node(pos, node)
+	local new_param2 = new_rotation + param2_supplement
 	
-	if config.sound and ndef.sounds and ndef.sounds.place then
-		local sound_name = ndef.sounds.place.name
-		local sound_gain = ndef.sounds.place.gain
-		minetest.sound_play(ndef.sounds.place.name, {
-			pos = pos,
-			gain = ndef.sounds.place.gain,
-			max_hear_distance = 10
-		}, true)
+	if ndef.on_rotate then
+		ndef.on_rotate(vector.new(pos),
+			{name = node.name, param1 = node.param1, param2 = node.param2},
+			user, mode, new_param2)
+		sound_play(pos, ndef)
+		return itemstack
 	end
+	
+	node.param2 = new_param2
+	minetest.swap_node(pos, node)
+	sound_play(pos, ndef)
 	
 	return itemstack
 end
@@ -84,6 +97,10 @@ controller.on_place = function(itemstack, user, pointed_thing)
 		if wallmounted == 0 or wallmounted == 1 then
 			look_dir = axis_util.get_look_dir_by_user(user)
 		else
+			if p2.y ~= p1.y then --multinode
+				p2.y = p1.y
+				dir = vector.direction(p2, p1)
+			end
 			look_dir = axis_util.get_look_dir_by_sidedir(dir)
 		end
 		
