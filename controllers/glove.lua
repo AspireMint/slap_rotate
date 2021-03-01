@@ -87,6 +87,11 @@ controller.on_place = function(itemstack, user, pointed_thing)
 		local p2 = pointed_thing.above
 		local dir = vector.direction(p2, p1)
 		
+		--hotfix for nodes bigger than 1 node
+		if vector.length(vector.round(dir)) > 1 then
+			return
+		end
+		
 		if vector.length(dir) == 0 then
 			return
 		end
